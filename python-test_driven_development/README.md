@@ -1,0 +1,1 @@
+Purpose of this directory is for my practices related to python at Holberton School
