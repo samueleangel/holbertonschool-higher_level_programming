@@ -1,16 +1,26 @@
 #!/usr/bin/python3
-"""Módulo para encontrar el entero máximo en una lista"""
+"""Module to find the max integer in a list
+"""
+
 
 def max_integer(list=[]):
-    """Función que encuentra y retorna el entero máximo en una lista de enteros.
-    Si la lista está vacía, retorna None.
+    """Function to find and return the max integer in a list of integers
+        If the list is empty, the function returns None
     """
     if not isinstance(list, (list, tuple)):
         raise TypeError("list must be a list of integers or floats")
+    
     if len(list) == 0:
         return None
+    
+    for item in list:
+        if not isinstance(item, (int, float)):
+            raise TypeError("list must be a list of integers or floats")
+    
     result = list[0]
-    for i in range(1, len(list)):
+    i = 1
+    while i < len(list):
         if list[i] > result:
             result = list[i]
+        i += 1
     return result 
