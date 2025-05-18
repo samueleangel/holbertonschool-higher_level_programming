@@ -19,7 +19,7 @@ def add_integer(a, b=98):
         TypeError: Si a o b no son enteros o flotantes
     """
     if a is None or not isinstance(a, (int, float)):
-        raise TypeError("a must be an integer ")
+        raise TypeError("a must be an integer")
     if b is None or not isinstance(b, (int, float)):
         raise TypeError("b must be an integer")
 
