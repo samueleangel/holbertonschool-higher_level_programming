@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Defines a Rectangle class with comparison method."""
 
+
 class Rectangle:
     """Represents a rectangle."""
 
