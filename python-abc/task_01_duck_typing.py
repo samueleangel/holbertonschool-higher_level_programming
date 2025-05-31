@@ -47,7 +47,6 @@ class Circle(Shape):
         Args:
             radius (float): The radius of the circle.
         """
-        super().__init__()
         self.radius = radius
 
     def area(self):
@@ -86,7 +85,6 @@ class Rectangle(Shape):
             width (float): The width of the rectangle.
             height (float): The height of the rectangle.
         """
-        super().__init__()
         self.width = width
         self.height = height
 
@@ -117,7 +115,23 @@ def shape_info(shape):
     methods on the given object without explicit type checking.
 
     Args:
-        shape (Shape): An object that implements area() and perimeter().
+        shape: An object that implements area() and perimeter().
     """
     print(f"Area: {shape.area()}")
     print(f"Perimeter: {shape.perimeter()}")
+
+
+if __name__ == "__main__":
+    # Test instantiation and shape_info usage
+
+    try:
+        s = Shape()
+    except TypeError:
+        # Correctly cannot instantiate abstract class
+        pass
+
+    c = Circle(5)
+    r = Rectangle(4, 7)
+
+    shape_info(c)
+    shape_info(r)
