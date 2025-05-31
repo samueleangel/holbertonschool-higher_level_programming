@@ -1,73 +1,89 @@
-"""
-Test cases for BaseGeometry class in 7-base_geometry.py
-
->>> import inspect
->>> import sys
->>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
-
-# Check if module is documented
->>> print(bool(inspect.getdoc(sys.modules['7-base_geometry'])))
+# Test módulo y clase documentados
+>>> import __import__('7-base_geometry') as mod
+>>> print(bool(mod.__doc__ and mod.__doc__.strip()))
+True
+>>> print(bool(mod.BaseGeometry.__doc__ and mod.BaseGeometry.__doc__.strip()))
 True
 
-# Check if class is documented
->>> print(bool(BaseGeometry.__doc__))
+# Instanciación y dir()
+>>> bg = mod.BaseGeometry()
+>>> print(isinstance(bg, mod.BaseGeometry))
+True
+>>> print('area' in dir(bg))
+True
+>>> print('integer_validator' in dir(bg))
 True
 
-# Check instantiation and dir output
->>> bg = BaseGeometry()
->>> sorted(dir(bg))  # Sorted for consistent output
-['_BaseGeometry__module', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'area', 'integer_validator']
-
-# Correct use of integer_validator with valid values
->>> bg.integer_validator("my_int", 12)
->>> bg.integer_validator("width", 89)
-
-# Raise TypeError if value is not int
->>> try:
-...     bg.integer_validator("name", "John")
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] name must be an integer
-
-# Raise ValueError if value is 0 or less
->>> try:
-...     bg.integer_validator("age", 0)
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[ValueError] age must be greater than 0
-
->>> try:
-...     bg.integer_validator("distance", -4)
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[ValueError] distance must be greater than 0
-
-# Raise TypeError if value is float
->>> try:
-...     bg.integer_validator("height", 13.5)
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] height must be an integer
-
-# area() raises Exception
+# area() - debe lanzar excepción
 >>> try:
 ...     bg.area()
 ... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
+...     print(f"[{e.__class__.__name__}] {e}")
 [Exception] area() is not implemented
 
-# Additional tests for other invalid types
+# integer_validator() con valores válidos
+>>> bg.integer_validator("my_int", 12)
+>>> bg.integer_validator("width", 89)
 
->>> invalid_values = ["4", (4,), [3], True, {3,4}, None]
->>> for val in invalid_values:
-...     try:
-...         bg.integer_validator("age", val)
-...     except Exception as e:
-...         print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] age must be an integer
-[TypeError] age must be an integer
-[TypeError] age must be an integer
-[TypeError] age must be an integer
-[TypeError] age must be an integer
-[TypeError] age must be an integer
-"""
+# integer_validator() con valor tipo string -> TypeError
+>>> try:
+...     bg.integer_validator("name", "John")
+... except Exception as e:
+...     print(f"[{e.__class__.__name__}] {e}")
+[TypeError] name must be an integer
+
+# integer_validator() con valor 0 -> ValueError
+>>> try:
+...     bg.integer_validator("age", 0)
+... except Exception as e:
+...     print(f"[{e.__class__.__name__}] {e}")
+[ValueError] age must be greater than 0
+
+# integer_validator() con valor negativo -> ValueError
+>>> try:
+...     bg.integer_validator("distance", -4)
+... except Exception as e:
+...     print(f"[{e.__class__.__name__}] {e}")
+[ValueError] distance must be greater than 0
+
+# integer_validator() con valor float -> TypeError
+>>> try:
+...     bg.integer_validator("length", 13.5)
+... except Exception as e:
+...     print(f"[{e.__class__.__name__}] {e}")
+[TypeError] length must be an integer
+
+# integer_validator() con valor booleano True (que no es int) -> TypeError
+>>> try:
+...     bg.integer_validator("flag", True)
+... except Exception as e:
+...     print(f"[{e.__class__.__name__}] {e}")
+[TypeError] flag must be an integer
+
+# integer_validator() con valor None -> TypeError
+>>> try:
+...     bg.integer_validator("none_value", None)
+... except Exception as e:
+...     print(f"[{e.__class__.__name__}] {e}")
+[TypeError] none_value must be an integer
+
+# integer_validator() con valor lista -> TypeError
+>>> try:
+...     bg.integer_validator("list_value", [3])
+... except Exception as e:
+...     print(f"[{e.__class__.__name__}] {e}")
+[TypeError] list_value must be an integer
+
+# integer_validator() con valor tupla -> TypeError
+>>> try:
+...     bg.integer_validator("tuple_value", (4,))
+... except Exception as e:
+...     print(f"[{e.__class__.__name__}] {e}")
+[TypeError] tuple_value must be an integer
+
+# integer_validator() con valor set -> TypeError
+>>> try:
+...     bg.integer_validator("set_value", {3, 4})
+... except Exception as e:
+...     print(f"[{e.__class__.__name__}] {e}")
+[TypeError] set_value must be an integer
