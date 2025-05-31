@@ -19,7 +19,7 @@ class Shape(ABC):
         Returns:
             float: The area of the shape.
         """
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
     def perimeter(self):
@@ -29,7 +29,7 @@ class Shape(ABC):
         Returns:
             float: The perimeter of the shape.
         """
-        pass
+        raise NotImplementedError()
 
 
 class Circle(Shape):
@@ -47,6 +47,7 @@ class Circle(Shape):
         Args:
             radius (float): The radius of the circle.
         """
+        super().__init__()
         self.radius = radius
 
     def area(self):
@@ -85,6 +86,7 @@ class Rectangle(Shape):
             width (float): The width of the rectangle.
             height (float): The height of the rectangle.
         """
+        super().__init__()
         self.width = width
         self.height = height
 
