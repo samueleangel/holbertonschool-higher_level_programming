@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Module for generating Pascal's Triangle."""
 
+
 def pascal_triangle(n):
     """Generate Pascal's Triangle up to n rows.
     Args:
@@ -10,7 +11,7 @@ def pascal_triangle(n):
     """
     if n <= 0:
         return []
-    
+
     triangle = [[1]]
     for i in range(1, n):
         row = [1]

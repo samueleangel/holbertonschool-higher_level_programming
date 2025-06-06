@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Module for Student class with serialization/deserialization."""
 
+
 class Student:
     """Class representing a student with JSON serialization/deserialization."""
 
@@ -22,9 +23,10 @@ class Student:
         Returns:
             dict: Dictionary containing student attributes
         """
-        if isinstance(attrs, list) and all(isinstance(attr, str) for attr in attrs):
-            return {attr: getattr(self, attr) 
-                   for attr in attrs if hasattr(self, attr)}
+        if isinstance(attrs, list) and all(isinstance(attr, str)
+                                           for attr in attrs):
+            return {attr: getattr(self, attr)
+                    for attr in attrs if hasattr(self, attr)}
         return self.__dict__
 
     def reload_from_json(self, json):
