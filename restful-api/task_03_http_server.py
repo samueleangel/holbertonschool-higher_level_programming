@@ -1,62 +1,49 @@
 #!/usr/bin/python3
-"""
-Simple HTTP API server using http.server.BaseHTTPRequestHandler.
-
-Endpoints:
-- /              -> Returns a simple greeting text.
-- /data          -> Returns sample JSON data.
-- /status        -> Returns API status (OK).
-- Any other path -> Returns 404 Not Found with an error message.
-"""
-
 import http.server
+import socketserver
 import json
-from http import HTTPStatus
 
+PORT = 8000  # Define the port to run the server on
 
-class SimpleAPIHandler(http.server.BaseHTTPRequestHandler):
+# Custom request handler class
+class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
+    # Handle GET requests
     def do_GET(self):
-        path = self.path
-
-        if path == "/":
-            self.send_response(HTTPStatus.OK)
-            self.send_header("Content-Type", "text/plain; charset=utf-8")
+        # Handle root endpoint "/"
+        if self.path == "/":
+            self.send_response(200)  # HTTP 200 OK
+            self.send_header("Content-type", "text/plain")  # Plain text response
             self.end_headers()
-            response_text = "Hello, this is a simple API!"
-            self.wfile.write(response_text.encode("utf-8"))
+            self.wfile.write(b"Hello, this is a simple API!")  # Message content
 
-        elif path == "/data":
-            data = {"name": "John", "age": 30, "city": "New York"}
-            self.send_response(HTTPStatus.OK)
-            self.send_header("Content-Type", "application/json; charset=utf-8")
+        # Handle "/data" endpoint
+        elif self.path == "/data":
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")  # Must be JSON content type
             self.end_headers()
-            self.wfile.write(json.dumps(data).encode("utf-8"))
+            data = {
+                "name": "John",
+                "age": 30,
+                "city": "New York"
+            }
+            self.wfile.write(json.dumps(data).encode("utf-8"))  # Serialize to JSON and encode
 
-        elif path == "/status":
-            data = {"status": "OK"}
-            self.send_response(HTTPStatus.OK)
-            self.send_header("Content-Type", "application/json; charset=utf-8")
+        # Handle "/status" endpoint
+        elif self.path == "/status":
+            self.send_response(200)
+            self.send_header("Content-type", "text/plain")
             self.end_headers()
-            self.wfile.write(json.dumps(data).encode("utf-8"))
+            self.wfile.write(b"OK")  # Must return just "OK" as plain text
 
+        # Return 404 for all other endpoints
         else:
-            self.send_response(HTTPStatus.NOT_FOUND)
-            self.send_header("Content-Type", "text/plain; charset=utf-8")
+            self.send_response(404)  # HTTP 404 Not Found
+            self.send_header("Content-type", "text/plain")
             self.end_headers()
             self.wfile.write(b"Endpoint not found")
 
-    def log_message(self, format, *args):
-        return
-
-
-def run(server_class=http.server.HTTPServer,
-        handler_class=SimpleAPIHandler,
-        port=8000):
-    server_address = ('', port)
-    httpd = server_class(server_address, handler_class)
-    print(f"Starting HTTP server on port {port}...")
-    httpd.serve_forever()
-
-
+# Set up and start the server
 if __name__ == "__main__":
-    run()
+    with socketserver.TCPServer(("", PORT), SimpleHTTPRequestHandler) as httpd:
+        print(f"Serving on port {PORT}")
+        httpd.serve_forever()
