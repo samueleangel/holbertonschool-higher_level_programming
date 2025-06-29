@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-# Prints all cities from the hbtn_0e_4_usa database, sorted by city ID.
-# Run it like this:
-# ./4-cities_by_state.py <username> <password> <database_name>
+# Lists all cities of the database hbtn_0e_4_usa, ordered by city id.
 import sys
 import MySQLdb
 

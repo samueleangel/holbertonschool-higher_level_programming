@@ -1,8 +1,6 @@
 #!/usr/bin/python3
-# Shows all cities from a specific state in the hbtn_0e_4_usa database.
-# The query is safe against SQL injection.
-# How to use:
-# ./5-filter_cities.py <username> <password> <database_name> <state_name>
+# Shows all cities of a given state from the
+# states table of the database hbtn_0e_4_usa.
 import sys
 import MySQLdb
 

@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-# Prints every State object stored in the hbtn_0e_6_usa database.
-# Run it like: ./7-model_state_fetch_all.py <username> <password> <database_name>
-
+# Lists all State objects from the database hbtn_0e_6_usa.
 import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker

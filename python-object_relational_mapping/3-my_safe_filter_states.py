@@ -1,9 +1,6 @@
 #!/usr/bin/python3
-# Prints all rows from the 'states' table in the hbtn_0e_0_usa database
-# where the name matches the one given as argument.
-# This version is safe against SQL injection.
-# How to run:
-# ./3-my_safe_filter_states.py <username> <password> <database_name> <state_name>
+# Shows all values in the states table of the database hbtn_0e_0_usa
+# Safe from SQL injections.
 import sys
 import MySQLdb
 
